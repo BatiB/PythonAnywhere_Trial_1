@@ -1,0 +1,269 @@
+# --------------------------
+# Sources
+# https://towardsdatascience.com/build-a-web-data-dashboard-in-just-minutes-with-python-d722076aee2b
+# https://youtube.com/watch?v=wYvx8K-nzg4&feature=share
+# https://github.com/fnneves/portfolio_tracker_medium
+
+# Callback Dash: https://www.youtube.com/watch?v=uzosQuETMKo
+
+# Bootstraps Components: https://dash-bootstrap-components.opensource.faculty.ai/
+# Bootstraps Themes: https://dash-bootstrap-components.opensource.faculty.ai/docs/themes/
+# Bootstraps App Gallery: https://hellodash.pythonanywhere.com/app_gallery
+
+# --------------------------
+# Libraries
+
+import numpy as np
+import dash
+from dash import dcc
+from dash import html
+from dash.dependencies import Output, Input
+import plotly.express as px
+import dash_bootstrap_components as dbc
+import plotly.graph_objects as go
+from dash import dash_table
+import plotly.io as pio
+from dash_bootstrap_templates import load_figure_template
+
+
+# Indicators 1
+P1 = np.round(np.random.random_sample() * 10, 2)
+P2 = np.round(np.random.random_sample() * 10, 2)
+P3 = np.round(np.random.random_sample() * 10, 2)
+P4 = np.round(np.random.random_sample() * 10, 2)
+
+P5 = np.round(np.random.random_sample() * 10, 2)
+P6 = np.round(np.random.random_sample() * 10, 2)
+P7 = np.round(np.random.random_sample() * 10, 2)
+P8 = np.round(np.random.random_sample() * 10, 2)
+
+
+CHART_THEME = 'plotly_dark'
+
+# https://plotly.com/python/indicator/
+# https://plotly.com/python/reference/indicator/
+indicators_ptf = go.Figure()
+indicators_ptf.layout.template = CHART_THEME
+indicators_ptf.add_trace(go.Indicator(
+    mode = "number+delta",
+    value = P1,
+    number = {'suffix': " %"},
+    title = {"text": "<br><span style='font-size:0.7em;color:gray'>7 Days</span>"},
+    delta = {'position': "bottom", 'reference': P5, 'relative': False},
+    domain = {'row': 0, 'column': 0}))
+
+indicators_ptf.add_trace(go.Indicator(
+    mode = "number+delta",
+    value = P2,
+    number = {'suffix': " %"},
+    title = {"text": "<span style='font-size:0.7em;color:gray'>15 Days</span>"},
+    delta = {'position': "bottom", 'reference': P6, 'relative': False},
+    domain = {'row': 1, 'column': 0}))
+
+indicators_ptf.add_trace(go.Indicator(
+    mode = "number+delta",
+    value = P3,
+    number = {'suffix': " %"},
+    title = {"text": "<span style='font-size:0.7em;color:gray'>30 Days</span>"},
+    delta = {'position': "bottom", 'reference': P7, 'relative': True},
+    domain = {'row': 2, 'column': 0}))
+
+indicators_ptf.add_trace(go.Indicator(
+    mode = "number+delta",
+    value = P4,
+    number = {'suffix': " %"},
+    title = {"text": "<span style='font-size:0.7em;color:gray'>200 Days</span>"},
+    delta = {'position': "bottom", 'reference': P8, 'relative': True},
+    domain = {'row': 3, 'column': 1}))
+
+indicators_ptf.update_layout(
+    grid = {'rows': 4, 'columns': 1, 'pattern': "independent"},
+    margin=dict(l=50, r=50, t=30, b=30)
+    )
+
+# Indicators 2
+indicators_sp500 = go.Figure()
+indicators_sp500.layout.template = CHART_THEME
+indicators_sp500.add_trace(go.Indicator(
+    mode = "number+delta",
+    value = P5,
+    number = {'suffix': " %"},
+    title = {"text": "<br><span style='font-size:0.7em;color:gray'>7 Days</span>"},
+    domain = {'row': 0, 'column': 0}))
+
+indicators_sp500.add_trace(go.Indicator(
+    mode = "number+delta",
+    value = P6,
+    number = {'suffix': " %"},
+    title = {"text": "<span style='font-size:0.7em;color:gray'>15 Days</span>"},
+    domain = {'row': 1, 'column': 0}))
+
+indicators_sp500.add_trace(go.Indicator(
+    mode = "number+delta",
+    value = P7,
+    number = {'suffix': " %"},
+    title = {"text": "<span style='font-size:0.7em;color:gray'>30 Days</span>"},
+    domain = {'row': 2, 'column': 0}))
+
+indicators_sp500.add_trace(go.Indicator(
+    mode = "number+delta",
+    value = P8,
+    number = {'suffix': " %"},
+    title = {"text": "<span style='font-size:0.7em;color:gray'>200 Days</span>"},
+    domain = {'row': 3, 'column': 1}))
+
+indicators_sp500.update_layout(
+    grid = {'rows': 4, 'columns': 1, 'pattern': "independent"},
+    margin=dict(l=50, r=50, t=30, b=30))
+
+
+V1 = 60000.54
+V2 = 4500.34
+V3 = 450.56
+V4 = .355478
+
+# Indicators 3
+Ind_Horizontal_v0 = go.Figure()
+Ind_Horizontal_v0.layout.template = CHART_THEME
+Ind_Horizontal_v0.add_trace(go.Indicator(
+    mode = "number+delta",
+    value = V1,
+    #number = f'{}',
+    title = {"text": "<br><span style='font-size:0.7em;color:gray'>BITCOIN</span>"},
+    domain = {'row': 0, 'column': 0}))
+
+Ind_Horizontal_v0.add_trace(go.Indicator(
+    mode = "number+delta",
+    value = V2,
+    #valueformat = {'valueformat': ".0f"},
+    #number = {'suffix': " %"},
+    title = {"text": "<span style='font-size:0.7em;color:gray'>ETHEREUM</span>"},
+    domain = {'row': 0, 'column': 1}))
+
+Ind_Horizontal_v0.add_trace(go.Indicator(
+    mode = "number+delta",
+    value = V3,
+    #number = {'suffix': " %"},
+    title = {"text": "<span style='font-size:0.7em;color:gray'>BINANCE</span>"},
+    domain = {'row': 0, 'column': 2}))
+
+Ind_Horizontal_v0.add_trace(go.Indicator(
+    mode = "number+delta",
+    value = V4,
+    #number = {'suffix': " %"},
+    title = {"text": "<span style='font-size:0.7em;color:gray'>CRYPTO.COM</span>"},
+    domain = {'row': 0, 'column': 3}))
+
+Ind_Horizontal_v0.update_layout(
+    grid = {'rows': 1, 'columns': 4, 'pattern': "independent"},
+    margin=dict(l=50, r=50, t=30, b=30))
+
+
+
+
+# --------------------------
+# App
+# --------------------------
+
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
+#load_figure_template('darkly')
+
+app.layout = dbc.Container(
+    [
+        dbc.Row(dbc.Col(html.H2('PORTFOLIO OVERVIEW', className='text-center text-primary, mb-3'))),  # header row
+
+        dbc.Row([  # start of second row
+            dbc.Col([  # first column on second row
+                html.H5('Total Portfolio Value ($USD)', className='text-center'),
+                dcc.Graph(id='chrt-portfolio-main',
+                          #figure=chart_ptfvalue,
+                          style={'height': 550}),
+                html.Hr(),
+            ], width={'size': 8, 'offset': 0, 'order': 1}),  # width first column on second row
+            dbc.Col([  # second column on second row
+                html.H5('Portfolio', className='text-center'),
+                dcc.Graph(id='indicators-ptf',
+                          figure=indicators_ptf,
+                          style={'height': 550}),
+                html.Hr()
+            ], width={'size': 2, 'offset': 0, 'order': 2}),  # width second column on second row
+            dbc.Col([  # third column on second row
+                html.H5('S&P500', className='text-center'),
+                dcc.Graph(id='indicators-sp',
+                          figure=indicators_sp500,
+                          style={'height': 550}),
+                html.Hr()
+            ], width={'size': 2, 'offset': 0, 'order': 3}),  # width third column on second row
+        ]),  # end of second row
+
+        dbc.Row([  # start of third row
+            dbc.Col([  # first column on third row
+                html.H5('Monthly Return (%)', className='text-center'),
+                dcc.Graph(id='chrt-portfolio-secondary',
+                          #figure=fig_growth2,
+                          style={'height': 380}),
+            ], width={'size': 8, 'offset': 0, 'order': 1}),  # width first column on second row
+            dbc.Col([  # second column on third row
+                html.H5('Top 15 Holdings', className='text-center'),
+                dcc.Graph(id='pie-top15',
+                          #figure=donut_top,
+                          style={'height': 380}),
+            ], width={'size': 4, 'offset': 0, 'order': 2}),  # width second column on second row
+        ]),  # end of third row
+
+        dbc.Row([  # start of forth row
+            dbc.Col([  # first column on third row
+                html.H5('Monthly Return (%)', className='text-center'),
+                dcc.Graph(id='chrt-portfolio-secondary_1',
+                          # figure=fig_growth2,
+                          style={'height': 380}),
+            ], width={'size': 4, 'offset': 0, 'order': 1}),  # width first column on second row
+            dbc.Col([  # second column on third row
+                html.H5('Top 15 Holdings', className='text-center'),
+                dcc.Graph(id='pie-top15_1',
+                          # figure=donut_top,
+                          style={'height': 380}),
+            ], width={'size': 8, 'offset': 0, 'order': 2}),  # width second column on second row
+        ]),  # end of forth row
+
+        dbc.Row([  # start of second row
+            dbc.Col([  # second column on second row
+                html.H5('Portfolio', className='text-center'),
+                dcc.Graph(id='indicators-ptf_V1',
+                          figure=Ind_Horizontal_v0,
+                          style={'height': 100}),
+                html.Hr()
+            ], width={'size': 12, 'offset': 0, 'order': 1}),
+        ]),
+
+        dbc.Row([  # start of forth row
+            dbc.Col([  # first column on third row
+                html.H5('Monthly Return (%)', className='text-center'),
+                dcc.Graph(id='chrt-portfolio-secondary_2',
+                          # figure=fig_growth2,
+                          style={'height': 380}),
+            ], width={'size': 4, 'offset': 0, 'order': 1}),  # width first column on second row
+            dbc.Col([  # second column on third row
+                html.H5('Top 15 Holdings', className='text-center'),
+                dcc.Graph(id='pie-top15_2',
+                          # figure=donut_top,
+                          style={'height': 380}),
+            ], width={'size': 8, 'offset': 0, 'order': 2}),  # width second column on second row
+        ], className="mx-5",
+        ),  # end of forth row
+
+        dbc.Row([  # start of second row
+            dbc.Col([  # second column on second row
+                html.H5('Portfolio', className='text-center'),
+                dcc.Graph(id='indicators-ptf_V2',
+                          figure=Ind_Horizontal_v0,
+                          style={'height': 100}),
+                html.Hr()
+            ], width={'size': 12, 'offset': 0, 'order': 1}),
+        ], className="mx-5",
+        ),
+
+    ], fluid=True)
+
+if __name__ == "__main__":
+    app.run_server(debug=False)
