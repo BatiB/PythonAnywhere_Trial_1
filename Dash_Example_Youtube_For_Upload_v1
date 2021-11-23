@@ -116,51 +116,6 @@ indicators_sp500.update_layout(
     grid = {'rows': 4, 'columns': 1, 'pattern': "independent"},
     margin=dict(l=50, r=50, t=30, b=30))
 
-
-V1 = 60000.54
-V2 = 4500.34
-V3 = 450.56
-V4 = .355478
-
-# Indicators 3
-Ind_Horizontal_v0 = go.Figure()
-Ind_Horizontal_v0.layout.template = CHART_THEME
-Ind_Horizontal_v0.add_trace(go.Indicator(
-    mode = "number+delta",
-    value = V1,
-    #number = f'{}',
-    title = {"text": "<br><span style='font-size:0.7em;color:gray'>BITCOIN</span>"},
-    domain = {'row': 0, 'column': 0}))
-
-Ind_Horizontal_v0.add_trace(go.Indicator(
-    mode = "number+delta",
-    value = V2,
-    #valueformat = {'valueformat': ".0f"},
-    #number = {'suffix': " %"},
-    title = {"text": "<span style='font-size:0.7em;color:gray'>ETHEREUM</span>"},
-    domain = {'row': 0, 'column': 1}))
-
-Ind_Horizontal_v0.add_trace(go.Indicator(
-    mode = "number+delta",
-    value = V3,
-    #number = {'suffix': " %"},
-    title = {"text": "<span style='font-size:0.7em;color:gray'>BINANCE</span>"},
-    domain = {'row': 0, 'column': 2}))
-
-Ind_Horizontal_v0.add_trace(go.Indicator(
-    mode = "number+delta",
-    value = V4,
-    #number = {'suffix': " %"},
-    title = {"text": "<span style='font-size:0.7em;color:gray'>CRYPTO.COM</span>"},
-    domain = {'row': 0, 'column': 3}))
-
-Ind_Horizontal_v0.update_layout(
-    grid = {'rows': 1, 'columns': 4, 'pattern': "independent"},
-    margin=dict(l=50, r=50, t=30, b=30))
-
-
-
-
 # --------------------------
 # App
 # --------------------------
@@ -195,74 +150,6 @@ app.layout = dbc.Container(
                 html.Hr()
             ], width={'size': 2, 'offset': 0, 'order': 3}),  # width third column on second row
         ]),  # end of second row
-
-        dbc.Row([  # start of third row
-            dbc.Col([  # first column on third row
-                html.H5('Monthly Return (%)', className='text-center'),
-                dcc.Graph(id='chrt-portfolio-secondary',
-                          #figure=fig_growth2,
-                          style={'height': 380}),
-            ], width={'size': 8, 'offset': 0, 'order': 1}),  # width first column on second row
-            dbc.Col([  # second column on third row
-                html.H5('Top 15 Holdings', className='text-center'),
-                dcc.Graph(id='pie-top15',
-                          #figure=donut_top,
-                          style={'height': 380}),
-            ], width={'size': 4, 'offset': 0, 'order': 2}),  # width second column on second row
-        ]),  # end of third row
-
-        dbc.Row([  # start of forth row
-            dbc.Col([  # first column on third row
-                html.H5('Monthly Return (%)', className='text-center'),
-                dcc.Graph(id='chrt-portfolio-secondary_1',
-                          # figure=fig_growth2,
-                          style={'height': 380}),
-            ], width={'size': 4, 'offset': 0, 'order': 1}),  # width first column on second row
-            dbc.Col([  # second column on third row
-                html.H5('Top 15 Holdings', className='text-center'),
-                dcc.Graph(id='pie-top15_1',
-                          # figure=donut_top,
-                          style={'height': 380}),
-            ], width={'size': 8, 'offset': 0, 'order': 2}),  # width second column on second row
-        ]),  # end of forth row
-
-        dbc.Row([  # start of second row
-            dbc.Col([  # second column on second row
-                html.H5('Portfolio', className='text-center'),
-                dcc.Graph(id='indicators-ptf_V1',
-                          figure=Ind_Horizontal_v0,
-                          style={'height': 100}),
-                html.Hr()
-            ], width={'size': 12, 'offset': 0, 'order': 1}),
-        ]),
-
-        dbc.Row([  # start of forth row
-            dbc.Col([  # first column on third row
-                html.H5('Monthly Return (%)', className='text-center'),
-                dcc.Graph(id='chrt-portfolio-secondary_2',
-                          # figure=fig_growth2,
-                          style={'height': 380}),
-            ], width={'size': 4, 'offset': 0, 'order': 1}),  # width first column on second row
-            dbc.Col([  # second column on third row
-                html.H5('Top 15 Holdings', className='text-center'),
-                dcc.Graph(id='pie-top15_2',
-                          # figure=donut_top,
-                          style={'height': 380}),
-            ], width={'size': 8, 'offset': 0, 'order': 2}),  # width second column on second row
-        ], className="mx-5",
-        ),  # end of forth row
-
-        dbc.Row([  # start of second row
-            dbc.Col([  # second column on second row
-                html.H5('Portfolio', className='text-center'),
-                dcc.Graph(id='indicators-ptf_V2',
-                          figure=Ind_Horizontal_v0,
-                          style={'height': 100}),
-                html.Hr()
-            ], width={'size': 12, 'offset': 0, 'order': 1}),
-        ], className="mx-5",
-        ),
-
     ], fluid=True)
 
 if __name__ == "__main__":
